@@ -224,7 +224,6 @@ var wordClock = {
     },
 
     letterMap       : null,
-
     prevSentence    : [],
     prevSecond      : null,
     language        : null,
@@ -267,12 +266,7 @@ var wordClock = {
             this.settings = JSON.parse(localStorage.qlocktwo_settings);
         }
 
-        console.log(this.settings)
-
-        $('#clock').css('background', this.settings.color)
-
-        this.language = lang[this.settings.language]
-        this.state = this.settings.state
+        this.applySettings();
     },
 
     saveSettings: function(data) {
@@ -289,11 +283,18 @@ var wordClock = {
             }
         });
 
-        $('#clock').css('background', this.settings.color)
-
         localStorage.qlocktwo_settings = JSON.stringify(this.settings);
 
+        this.applySettings();
+
         this.switchState();
+    },
+
+    applySettings: function() {
+        this.language = lang[this.settings.language]
+        this.state = this.settings.state
+
+        $('#clock').css('background', this.settings.color);
     },
 
     buildSettingsModal: function() {
@@ -358,174 +359,162 @@ var wordClock = {
         }
     },
 
-  showText: function(){
-    if (this.state !== 0)
-      return;
+    showText: function(){
+        if (this.state !== 0) return;
 
-    // Hide last Sentence
-    this.hideLetters(this.prevSentence);
-
-
-    var showClock = false;
-    var plural = true;
-    var hours = this.getHours();
-    var minutes = this.getMinutes();
-
-    var showArr = [];
-
-    var startLetters = (this.language.sentences.start[hours] !== undefined ) ? this.language.sentences.start[hours] : this.language.sentences.start.all;
+        // Hide last Sentence
+        this.hideLetters(this.prevSentence);
 
 
-     showArr.push(startLetters);
+        var showClock = false;
+        var plural = true;
+        var hours = this.getHours();
+        var minutes = this.getMinutes();
 
-    if (minutes < 5){
-        showClock = true;
-        plural = false;
-    }else{
-        minutes -= minutes % 5;
-        showArr.push(this.language.sentences.minutes[minutes]);
-        if (minutes > this.language.sentences.incrementHourAt){
-            // Increment hour
-            hours = (hours+1) % 12;
+        var showArr = [];
+
+        var startLetters = (this.language.sentences.start[hours] !== undefined ) ? this.language.sentences.start[hours] : this.language.sentences.start.all;
+
+
+         showArr.push(startLetters);
+
+        if (minutes < 5){
+            showClock = true;
+            plural = false;
         }
-    }
+        else {
+            minutes -= minutes % 5;
+            showArr.push(this.language.sentences.minutes[minutes]);
+            if (minutes > this.language.sentences.incrementHourAt){
+                // Increment hour
+                hours = (hours+1) % 12;
+            }
+        }
 
-    if (plural && (this.language.sentences.hours[hours].length === 2)){
-      showArr.push(this.language.sentences.hours[hours][1]);
-    }else{
-        showArr.push(this.language.sentences.hours[hours][0]);
-    }
+        if (plural && (this.language.sentences.hours[hours].length === 2)){
+          showArr.push(this.language.sentences.hours[hours][1]);
+        }
+        else {
+            showArr.push(this.language.sentences.hours[hours][0]);
+        }
 
-    if (showClock){
-      var endLetters = (this.language.sentences.end[hours] !== undefined) ? this.language.sentences.end[hours] : this.language.sentences.end.all;
-      showArr.push(endLetters);
-    }
-    this.showLetters(showArr);
-    this.prevSentence = showArr;
+        if (showClock){
+            var endLetters = (this.language.sentences.end[hours] !== undefined) ? this.language.sentences.end[hours] : this.language.sentences.end.all;
+            showArr.push(endLetters);
+        }
+        this.showLetters(showArr);
+        this.prevSentence = showArr;
 
-    var that = this;
+        var that = this;
         // Wait for the rest of the 5min.
         setTimeout(function(){that.showText();}, (5 - (this.getMinutes() % 5)) * 60000 - this.getSeconds()*1000 - this.getMilliseconds());
-  },
+    },
 
-  showMinutes : function(){
-    var minutes = this.getMinutes() % 5;
+    showMinutes : function(){
+        var minutes = this.getMinutes() % 5;
 
-    if (minutes === 0){
-       this.hideMinutesDot(4);
-    }else{
-       this.showMinutesDot(minutes);
-    }
+        if (minutes === 0){
+           this.hideMinutesDot(4);
+        }
+        else{
+           this.showMinutesDot(minutes);
+        }
 
-    var that = this;
-    setTimeout(function(){that.showMinutes();}, (60-this.getSeconds())*1000 - this.getMilliseconds());
-  },
+        var that = this;
+        setTimeout(function(){that.showMinutes();}, (60-this.getSeconds())*1000 - this.getMilliseconds());
+    },
 
-  showSeconds : function(){
-      if (this.state != 1)
-         return;
+    showSeconds : function(){
+        if (this.state != 1) return;
 
-      var seconds = this.getSeconds();
+        var seconds = this.getSeconds();
 
-      this.hideNumber(this.prevSecond);
-      this.showNumber(seconds);
+        this.hideNumber(this.prevSecond);
+        this.showNumber(seconds);
 
-      this.prevSecond = seconds;
-      var that = this;
-      setTimeout(function(){that.showSeconds();},1000-this.getMilliseconds());
-  },
+        this.prevSecond = seconds;
+        var that = this;
+        setTimeout(function(){that.showSeconds();},1000-this.getMilliseconds());
+    },
 
-  getHours : function(){
-    var hour = (new Date()).getHours();
+    getHours : function(){
+        var hour = (new Date()).getHours();
         return (hour > 11) ? hour - 12 : hour;
     },
 
-  getMinutes : function(){
+    getMinutes : function(){
         return (new Date()).getMinutes();
     },
 
-  getSeconds: function(){
-      return  (new Date()).getSeconds();
-  },
-  getMilliseconds: function(){
-      return  (new Date()).getMilliseconds();
-  },
-  hideNumber : function(number){
-          if (number === undefined || number === null) return;
-          var tens = this.seconds[~~(number/10)];
-          var ones = this.seconds[(number % 10)];
-          this.changeClassLetters(tens, "", 0);
-          this.changeClassLetters(ones, "", 6);
-  },
-  showNumber : function(number){
+    getSeconds: function(){
+        return  (new Date()).getSeconds();
+    },
+
+    getMilliseconds: function(){
+        return  (new Date()).getMilliseconds();
+    },
+
+    hideNumber : function(number){
+        if (number === undefined || number === null) return;
+        var tens = this.seconds[~~(number/10)];
+        var ones = this.seconds[(number % 10)];
+        this.changeClassLetters(tens, "", 0);
+        this.changeClassLetters(ones, "", 6);
+    },
+
+    showNumber : function(number){
         tens = this.seconds[~~(number/10)];
         ones = this.seconds[(number % 10)];
         this.changeClassLetters(tens, "light", 0);
         this.changeClassLetters(ones, "light", 6);
-  },
-  hideLetters : function(la){
-      this.changeClassLetters(la, "", 0);
-  },
-  showLetters : function(la){
-      this.changeClassLetters(la, "light", 0);
-  },
-  hideMinutesDot : function(count){
-    this.changeClassMinutes(count, '');
-  },
-  showMinutesDot : function(count){
-    this.changeClassMinutes(count, 'light');
-  },
-  changeClassLetters: function(la, value, offset){
-    for (var s=0;s<la.length;s++){
-      for (var d=0;d<la[s].length;d++){
-          var x = la[s][d][0];
-          var y = la[s][d][1]+ offset;
-          if (la[s][d].length === 3){
-            var end = la[s][d][2]  + offset;
-            for (var i=y;i<=end;i++){
-              this.letterMap[x][i].className = value;
+    },
+
+    hideLetters : function(la){
+        this.changeClassLetters(la, "", 0);
+    },
+
+    showLetters : function(la){
+        this.changeClassLetters(la, "light", 0);
+    },
+
+    hideMinutesDot : function(count){
+        this.changeClassMinutes(count, '');
+    },
+
+    showMinutesDot : function(count){
+        this.changeClassMinutes(count, 'light');
+    },
+
+    changeClassLetters: function(la, value, offset){
+        for (var s=0;s<la.length;s++){
+            for (var d=0;d<la[s].length;d++){
+                var x = la[s][d][0];
+                var y = la[s][d][1]+ offset;
+                if (la[s][d].length === 3){
+                    var end = la[s][d][2]  + offset;
+                    for (var i=y;i<=end;i++){
+                        this.letterMap[x][i].className = value;
+                    }
+                }
+                else{
+                    this.letterMap[x][y].className = value;
+                }
             }
-          }else{
-             this.letterMap[x][y].className = value;
-          }
-      }
+        }
+    },
+
+    changeClassMinutes : function(count, value){
+        for (var i=0;i<count;i++){
+            document.getElementById("e"+i).className = value;
+        }
+    },
+
+    _inArray : function(arr, obj){
+        for (var i=0;i<arr.length;i++){
+            if (arr[i] == obj) return true;
+        }
+        return false;
     }
-  },
-  changeClassMinutes : function(count, value){
-      for (var i=0;i<count;i++){
-          document.getElementById("e"+i).className = value;
-      }
-  },
-  _inArray : function(arr, obj){
-    for (var i=0;i<arr.length;i++){
-      if (arr[i] == obj) return true;
-    }
-    return false;
-  }
 };
 
 wordClock.init();
-
-$('#settings a').on('click', function(e){
-  if (e.target.id === "state"){
-      wordClock.switchState();
-      if (wordClock.state){
-          $(e.target).html("show text");
-      }else{
-          $(e.target).html("show seconds");
-      }
-  }else{
-      wordClock.init(language[e.target.id]);
-  }
-  e.preventDefault();
-});
-
-var clock = $("#clock");
-var buttons = $("#settings .button");
-
-$('#settings').on("click", ".button", function(e){
-  var target = $(e.target);
-  buttons.removeClass("selected");
-  target.toggleClass("selected");
-  clock.css({backgroundColor:    target.css("backgroundColor")});
-});
