@@ -9,12 +9,13 @@ body{
     right: 0;
 }
 #nav ul { padding: 0; margin: 0 }
-#nav ul li {
-    display: inline-block;
+#nav ul li { display: inline-block; }
+#nav ul li a {
+    display: block;
     padding: 10px;
     border-radius: 50%;
 }
-#nav ul li:hover {
+#nav ul li a:hover {
     background: #E0E0E0;
 }
 #nav ul li i { display: block; color: #212121; }
@@ -23,22 +24,22 @@ body{
     font-family: 'Open Sans', sans-serif;
     position:relative;
     display:block;
-    color:#212121;
+    color:rgba(255,255,255,.17);
     font-size:30px;
-    background: #000;
     width:620px;
     padding:100px;
     margin:0 auto;
-    margin-top: 20%;
-    transition:background 0.5s linear;
-    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)
+    margin-top: 50vh;
+    transform: translateY(-50%);
+    transition:background 0.2s linear;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 24px 40px rgba(0,0,0,0.38)
 }
 
 #clock > span {
     text-indent: -9999px;
     width: 6px;
     height: 6px;
-    background: #212121;
+    background: rgba(255,255,255,.17);
     border-radius: 50%;
     margin: 30px;
 }
@@ -124,3 +125,41 @@ body{
 #e2, #e1{ right:0 }
 #e0, #e3{ left:0 }
 #e2, #e3{ bottom:0 }
+
+/* SETTINGS */
+
+#settings input[name="color"] + label {
+    padding: 0;
+    height: auto;
+    top: initial;
+    left: initial;
+}
+
+
+#settings input[name="color"] + label:before, #settings input[name="color"] + label:after { display: none; }
+
+#settings input[name="color"] + label span {
+    position: relative;
+    display: block;
+    width: 36px;
+    height: 36px;
+    margin: 6px;
+    border-radius: 50%;
+}
+
+#settings input[name="color"] + label span:before {
+    content: '';
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    margin: -6px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    transition: border .3s ease;
+}
+
+#settings input[name="color"]:checked + label span:before {
+    border: 3px solid #29B6F6;}

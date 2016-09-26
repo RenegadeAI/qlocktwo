@@ -2,28 +2,6 @@
 <html>
     <head>
         <title>QLOCKTWO</title>
-        <!--
-        Copyright (c) 2012 Fabrice Weinberg, http://codepen.io/FWeinb
-
-        Permission is hereby granted, free of charge, to any person obtaining
-        a copy of this software and associated documentation files (the
-        "Software"), to deal in the Software without restriction, including
-        without limitation the rights to use, copy, modify, merge, publish,
-        distribute, sublicense, and/or sell copies of the Software, and to
-        permit persons to whom the Software is furnished to do so, subject to
-        the following conditions:
-
-        The above copyright notice and this permission notice shall be
-        included in all copies or substantial portions of the Software.
-
-        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-        EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-        MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-        NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-        LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-        OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-        WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-        -->
 
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -45,7 +23,7 @@
     <body>
         <div id="nav">
             <ul>
-                <li><a class='modal-trigger' href="#settings"><i class="material-icons">settings</i></a></li>
+                <li><a class='settings-trigger' href="#settings"><i class="material-icons">settings</i></a></li>
             </ul>
         </div>
 
@@ -58,32 +36,83 @@
             </div>
         </div>
 
-        <div id="settings" class="modal bottom-sheet">
+        <form id="settings" class="modal bottom-sheet">
             <div class="modal-content">
                 <h4>Settings</h4>
 
-                <div class="button selected" id="darkblue"></div>
+                <!--<div class="button selected" id="darkblue"></div>
                 <div class="button" id="darkred"></div>
                 <div class="button" id="green"></div>
                 <div class="button" id="purple"></div>
-                <div class="button" id="orange"></div>
-                <p><a href="#" id="german">de</a> | <a href="#" id="english">en</a> | <a href="#" id="french">fr</a> | <a href="#" id="italian">it</a></p>
-                <p><a href="#" id="state">show seconds</a></p>
+                <div class="button" id="orange"></div>-->
 
+                <div class='row'>
+                    <div class="input-field col s6">
+                        <h6>Color</h6>
+
+                        <input value="#000" name="color" type="radio" id="color_black" />
+                        <label for="color_black"><span style='background-color: #000'></span></label>
+
+                        <input value="#F44336" name="color" type="radio" id="color_red" />
+                        <label for="color_red"><span style='background-color: #F44336'></span></label>
+
+                        <input value="#E91E63" name="color" type="radio" id="color_magenta" />
+                        <label for="color_magenta"><span style='background-color: #E91E63'></span></label>
+
+                        <input value="#9C27B0" name="color" type="radio" id="color_purple" />
+                        <label for="color_purple"><span style='background-color: #9C27B0'></span></label>
+
+                        <input value="#2196F3" name="color" type="radio" id="color_blue" />
+                        <label for="color_blue"><span style='background-color: #2196F3'></span></label>
+
+                        <input value="#00BCD4" name="color" type="radio" id="color_aqua" />
+                        <label for="color_aqua"><span style='background-color: #00BCD4'></span></label>
+
+                        <input value="#CDDC39" name="color" type="radio" id="color_lime" />
+                        <label for="color_lime"><span style='background-color: #CDDC39'></span></label>
+
+                        <input value="#4CAF50" name="color" type="radio" id="color_green" />
+                        <label for="color_green"><span style='background-color: #4CAF50'></span></label>
+
+                        <input value="#FF5722" name="color" type="radio" id="color_orange" />
+                        <label for="color_orange"><span style='background-color: #FF5722'></span></label>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class="input-field col s6">
+                        <h6>Language</h6>
+                        <select name='language'>
+                        </select>
+                    </div>
+
+                    <div class="input-field col s6">
+                        <h6>Mode</h6>
+                        <div class="input-field switch">
+                            <label>
+                                Show text
+                                <input name='state' type="checkbox">
+                                <span class="lever"></span>
+                                Show seconds
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="btn modal-action modal-close waves-effect waves-light">Save</a>
+                <button type="submit" class="btn modal-action modal-close waves-effect waves-light">Save</a>
             </div>
-        </div>
+        </form>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
         <script src="./js/qlocktwo.js"></script>
 
         <script>
-          $(document).ready(function(){
-            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+        $(document).ready(function(){
             $('.modal-trigger').leanModal();
-          });
+
+            $('select').material_select();
+        });
         </script>
 
     </body>
