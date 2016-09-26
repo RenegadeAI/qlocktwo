@@ -26,7 +26,10 @@
         -->
 
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
         <link href="./css/main.css" rel="stylesheet" />
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -40,30 +43,48 @@
         </script>
     </head>
     <body>
+        <div id="nav">
+            <ul>
+                <li><a class='modal-trigger' href="#settings"><i class="material-icons">settings</i></a></li>
+            </ul>
+        </div>
+
         <div id="clock">
             <span id="e0"></span>
             <span id="e1"></span>
-            <span id="e2">‌</span>
-            <span id="e3">‌</span>
+            <span id="e2"></span>
+            <span id="e3"></span>
             <div id="letters">
             </div>
-        </div>​
-        <div id="settings">
-            ​<div class="button selected" id="darkblue"></div>
-            ​<div class="button" id="darkred"​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​></div>
-            ​<div class="button" id="green"​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​></div>
-            ​<div class="button" id="purple"​​​​></div>
-            ​<div class="button" id="orange"​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​></div>
-            <p><a href="#" id="german">de</a> | <a href="#" id="english">en</a> | <a href="#" id="french">fr</a> | <a href="#" id="italian">it</a></p>
-            <p><a href="#" id="state">show seconds</a></p>
-        </div>
-        <div id="desc">
-            <h1>QLOCKTWO idea from <a href="http://qlocktwo.com/">Biegert & Funk</a></h1>
-            <p>Build in pure html, css and javascript. No image were used. It supports two languages (german and english can be extended but I don't know more languages) and you can change the color.</p>
         </div>
 
+        <div id="settings" class="modal bottom-sheet">
+            <div class="modal-content">
+                <h4>Settings</h4>
+
+                <div class="button selected" id="darkblue"></div>
+                <div class="button" id="darkred"></div>
+                <div class="button" id="green"></div>
+                <div class="button" id="purple"></div>
+                <div class="button" id="orange"></div>
+                <p><a href="#" id="german">de</a> | <a href="#" id="english">en</a> | <a href="#" id="french">fr</a> | <a href="#" id="italian">it</a></p>
+                <p><a href="#" id="state">show seconds</a></p>
+
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="btn modal-action modal-close waves-effect waves-light">Save</a>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
         <script src="./js/qlocktwo.js"></script>
 
-    </body>
+        <script>
+          $(document).ready(function(){
+            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+            $('.modal-trigger').leanModal();
+          });
+        </script>
 
+    </body>
 </html>

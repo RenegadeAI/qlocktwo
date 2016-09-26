@@ -2,6 +2,23 @@ body{
     background: #F5F5F5;
 }
 
+#nav {
+    margin: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+#nav ul { padding: 0; margin: 0 }
+#nav ul li {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 50%;
+}
+#nav ul li:hover {
+    background: #E0E0E0;
+}
+#nav ul li i { display: block; color: #212121; }
+
 #clock{
     font-family: 'Open Sans', sans-serif;
     position:relative;
@@ -9,9 +26,10 @@ body{
     color:#212121;
     font-size:30px;
     background: #000;
-    width:418px;
+    width:620px;
     padding:100px;
     margin:0 auto;
+    margin-top: 20%;
     transition:background 0.5s linear;
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)
 }
@@ -41,21 +59,6 @@ body{
     color:#fff;
 }
 
-#settings, #settings a{
-    color:#555;
-    font-size:13px;
-    width:160px;
-    margin:0 auto 10px auto; ;
-}
-#settings a:hover{
-    text-shadow: 0 0 1px #fff;
-}
-#settings p{
-    margin:0;
-    width:100%;
-    text-align:center;
-}
-
 .button{
     position:relative;
     display:inline-block;
@@ -79,7 +82,7 @@ body{
 }
 
 .selected:before{
-    content:'✔';
+    content:'';
     position:absolute;
     color:rgba(255,255,255,0.4);
     left:5px;
@@ -121,20 +124,3 @@ body{
 #e2, #e1{ right:0 }
 #e0, #e3{ left:0 }
 #e2, #e3{ bottom:0 }
-
-/* Just some basic styling */
-h1{
-    display:block;
-    color:white;
-    width:100%;
-    text-align:center;
-}
-
-a{
-    color:#555;
-    text-decoration:none;
-}
-
-a:hover{
-    text-shadow:0 0 2px #555;
-    }​
