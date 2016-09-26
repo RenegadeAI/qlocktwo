@@ -288,6 +288,8 @@ var wordClock = {
         this.applySettings();
 
         this.switchState();
+
+        Materialize.toast('Settings saved', 4000)
     },
 
     applySettings: function() {
