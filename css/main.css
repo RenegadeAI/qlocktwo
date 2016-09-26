@@ -1,38 +1,44 @@
-@import url(http://fonts.googleapis.com/css?family=Josefin+Sans);
-
-* { box-sizing: border-box; }
-
 body{
-    font-family:'Josefin Sans', Arial, "Trebuchet MS", sans-serif;
-    background-color:black;
+    background: #F5F5F5;
 }
 
 #clock{
+    font-family: 'Open Sans', sans-serif;
     position:relative;
     display:block;
-    color:#000;
+    color:#212121;
     font-size:30px;
-    background: rgb(0,0,139);
-    background: rgb(0,0,139) linear-gradient(-75deg, rgba(0,0,0,0) 50%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.0) 100%);
-    width:550px;
-    padding:70px;
+    background: #000;
+    width:418px;
+    padding:100px;
     margin:0 auto;
-    transition:background-color 0.5s linear;
+    transition:background 0.5s linear;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)
 }
+
+#clock > span {
+    text-indent: -9999px;
+    width: 6px;
+    height: 6px;
+    background: #212121;
+    border-radius: 50%;
+    margin: 30px;
+}
+
+#clock > span.light { background: #fff; }
 
 #letters, #letters span{
     display:inline-block;
-    line-height:41px;
+    line-height:42px;
     text-align:center;
     transition:all 0.5s linear;
 }
 #letters span{
-    width:35px;
+    width:38px;
 }
 
 .light{
-    color:#fff !important;
-    text-shadow: 0px 0px 5px #fff;
+    color:#fff;
 }
 
 #settings, #settings a{
@@ -111,18 +117,10 @@ body{
     font-size:15px;
 }
 
-#e0, #e1{
-    top:15px;
-}
-#e2, #e1{
-    right:25px;
-}
-#e0, #e3{
-    left:25px;
-}
-#e2, #e3{
-    bottom:20px;
-}
+#e0, #e1{ top:0 }
+#e2, #e1{ right:0 }
+#e0, #e3{ left:0 }
+#e2, #e3{ bottom:0 }
 
 /* Just some basic styling */
 h1{
